@@ -1,0 +1,27 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: 90vh;
+    width: 90vw;
+    margin: auto;
+}
+
+.container {
+    max-width: 100%;
+}
+
+td,
+th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.trash {
+    color: #dc3545;
+}
+
+.trash:hover {
+    color: #bb2d3b;
+}
