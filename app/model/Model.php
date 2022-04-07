@@ -85,6 +85,9 @@ class Model extends Db
 		return $query->fetchAll();
 	}
 
+	/**
+	* Compte le nomre de ligne d'un tableau
+	*/
 	public function countVar()
 	{
 		return $this->requete("SELECT count(*) FROM {$this->table}")->fetch();
@@ -116,7 +119,7 @@ class Model extends Db
 		$liste_inter = implode(', ', $inter);
 
 		// On exécute la requête
-		return $this->requete('INSERT INTO '.$this->table.' ('. $liste_champs.')VALUES('.$liste_inter.')', $valeurs);
+		return $this->requete('INSERT INTO '.$this->table.' ('. $liste_champs.')VALUES('.$liste_inter.')RETURNING id', $valeurs)->fetch();
 	}
 
 

@@ -25,3 +25,15 @@ th {
 .trash:hover {
     color: #bb2d3b;
 }
+
+.valide {
+    color: #8ACC88;
+}
+
+.valide:hover {
+    color: #5AAA1D;
+}
+
+header {
+    background-color: #C8C5D9;
+}

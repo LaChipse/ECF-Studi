@@ -1,26 +1,42 @@
 <?php 
     session_start();
 ?>
-<header class="p-3 bg-dark text-white">
+<header class="p-3 text-white">
     <div class="container h-75">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 
             <a class="navbar-brand" href="../index.php">
-                <img src="../asset/images/logo.png" alt="" width="30" height="30">
+                <img src="../asset/images/logo.png" alt="" width="50" height="50">
             </a>
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'instructeur') { 
+                require('../model/Instructeur.php');
+                $instructeurModel = new InstructeurModel(); 
+                $instructeur = $instructeurModel->find($_GET["id"]); ?>
+            
+            <?php } ?>
             
             <ul class="nav col-auto me-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="../index.php" class="nav-link px-2 text-white">Home</a></li>
-            <?php if (isset($_SESSION['user']) && $_SESSION['user'] == TRUE) { ?>
-                <li><a href="../controller/adminData.php" class="nav-link px-2 text-white">Gérer les données</a></li>
-            <?php } ?>
+                <li style="margin-right: 20px"><img src="<?php echo $instructeur['photoprofil'] ?>" class="profile-image rounded-circle" width="50" height="50"></li>
+                <li><a href="../controller/formations.php" class="nav-link px-2 text-white">Les formations</a></li>
+            <?php if (!isset($_SESSION['user']) || $_SESSION['user'] == FALSE) { ?>
+                
+                <li><a href="../controller/inscription.php?role=apprenant" class="nav-link px-2 text-white">Devenir apprenant</a></li>
+                <li><a href="../controller/inscription.php?role=instructeur" class="nav-link px-2 text-white">Devenir instructeur</a></li>
+            <?php 
+            }
+            if (isset($_SESSION['user']) && $_SESSION['user'] == TRUE) { 
+                if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+            ?>
+                <li><a href="../controller/candidature.php?valid=attente" class="nav-link px-2 text-white">Gérer les candidatures</a></li>
+            <?php 
+                } elseif (isset($_SESSION['role']) && $_SESSION['role'] == 'instructeur') {
+            ?>
+                <li><a href="../controller/manageFormation" class="nav-link px-2 text-white">Gérer mes formations</a></li>
+            <?php
+                }
+            } 
+            ?>
             </ul>
-
-            <form class="form-inline d-flex">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-primary my-sm-0" type="submit">Search</button>
-            </form>
-            
 
             <div class="text-end" style="margin-left: 20px">
             <?php if (!isset($_SESSION['user']) || $_SESSION['user'] == FALSE) { ?>
