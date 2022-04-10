@@ -1,6 +1,6 @@
 <?php
 
-    require('../model/Users.php');
+    require_once('../model/Users.php');
     $userModel = new UserModel();
 
     session_start();
@@ -19,16 +19,18 @@
                 if($row['role'] == 'admin') {
                     $_SESSION['role'] = 'admin';
                     $_SESSION['user'] = TRUE;
-                    header("Location: ../view/homeView.php?id=$row[id]");
+                    $_SESSION['id'] = $row["id"];
+                    header("Location: ../controller/home.php?id=$row[id]");
 
                 } elseif ($row['role'] == 'apprenant') {
                     $_SESSION['role'] = 'apprenant';
                     $_SESSION['user'] = TRUE;
-                    header("Location: ../view/homeView.php?id=$row[id]");
+                    $_SESSION['id'] = $row["id"];
+                    header("Location: ../controller/home.php?id=$row[id]");
 
                 } elseif ($row['role'] == 'instructeur') {
 
-                    require('../model/Instructeur.php');
+                    require_once('../model/Instructeur.php');
                     $instructeurModel = new InstructeurModel();
                     $instructeur = $instructeurModel->findBy(array('userid' => $row['id']));
 
@@ -40,7 +42,8 @@
 
                                 $_SESSION['role'] = 'instructeur';
                                 $_SESSION['user'] = TRUE;
-                                header("Location: ../view/homeView.php?id=$row[id]");
+                                $_SESSION['id'] = $row["id"];
+                                header("Location: ../controller/home.php?id=$row[id]");
 
                             } else {
                                 $_SESSION['user'] = FALSE;

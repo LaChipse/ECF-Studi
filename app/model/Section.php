@@ -1,7 +1,7 @@
 <?php
 require_once('../model/Model.php');
 
-class CoursModel extends Model
+class SectionModel extends Model
 {
     protected $id;
     protected $titre;
@@ -9,7 +9,7 @@ class CoursModel extends Model
 
     public function __construct()
     {
-        $this->table = 'cours';
+        $this->table = 'section';
     }
 
     /**

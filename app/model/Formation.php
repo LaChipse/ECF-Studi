@@ -1,7 +1,7 @@
 <?php
 require_once('../model/Model.php');
 
-class InstructeurModel extends Model
+class FormationModel extends Model
 {
     protected $id;
     protected $titre;
@@ -11,7 +11,7 @@ class InstructeurModel extends Model
 
     public function __construct()
     {
-        $this->table = 'instructeur';
+        $this->table = 'formation';
     }
 
     /**

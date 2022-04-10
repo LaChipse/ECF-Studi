@@ -1,11 +1,10 @@
 <?php
 
-require('../model/Instructeur.php');
-
+require_once('../model/Instructeur.php');
 
 $instructeurModel = new InstructeurModel();
 
-if($_GET['valid']) {
+if(isset($_GET['valid'])) {
     if(strval($_GET['valid']) === 'right') {
 
         $instructeurModel->validation = 'validée';
@@ -18,4 +17,4 @@ if($_GET['valid']) {
     }
 }
 
-header("Location: ../view/candidatureView.php");
+require("../view/candidatureView.php");

@@ -2,23 +2,21 @@
 <html style="height: 100%">
 
     <?php
-        require('../view/head.php');
+        require_once('../view/head.php');
     ?>
         
     <body style="height: 100vh">
         
         <?php
-            require('../view/header.php');
-            require('../model/Instructeur.php');
-            require('../model/Users.php');
+            require_once('../view/header.php');
+            require_once('../model/Users.php');
 
-            $instructeurModel = new InstructeurModel();
             $instructeur = $instructeurModel->findBy(array('validation' => 'En attente'));
 
             $userModel = new UserModel();
         ?>
         
-        <div class="news container my-4 h-75">
+        <div class="news container my-4">
 
         <div class="row mt-5">
         <?php if ( count($instructeur) > 0) 

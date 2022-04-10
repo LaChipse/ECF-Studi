@@ -11,7 +11,7 @@
         require('../view/header.php');
         ?>
         
-        <main class="container form-signin h-75 col-lg-5 mt-5" style="margin: auto">
+        <main class="container form-signin col-lg-5 mt-5" style="margin: auto">
 
         <form enctype="multipart/form-data" class="mt-5" style="margin: auto" action="../controller/inscription.php?role=<?php echo $_GET["role"]?>" method="post">
         <h1 class="mb-5 fw-normal text-center">Inscription</h1>
