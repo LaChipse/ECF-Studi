@@ -30,8 +30,29 @@
                             <img class="card-img-top rounded" style="height: 350px" src="<?php echo $row['image'] ?>">
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $row['titre'] ?></h5>
-                                <a class="btn btn-secondary btn-lg" <?php if (!isset($_SESSION['user']) || $_SESSION['user'] == FALSE || strval($_SESSION['user']) != 'apprenant') { ?>
-                                    href='../controller/login.php' <?php } else { ?> href='../controller/oneFormation.php' <?php } ?> role="button">Suivre cette formation</a>
+                                <?php if (!isset($_SESSION['user']) || $_SESSION['user'] == FALSE || strval($_SESSION['role']) != 'apprenant') { ?>
+                                    <a class="mt-5 btn btn-secondary btn-lg" href='../controller/login.php' role="button">Suivre cette formation </a>
+
+                                <?php } else { 
+                                    if(isset($formSuiviApprenant)) {
+                                        if(in_array($row['id'], $formSuiviApprenant)) {
+                                ?>
+                                            <a class="mt-5 btn btn-secondary btn-lg" href='../controller/oneFormation.php?id=<?php echo $row['id']?>' role="button">Continuer cette formation </a>
+
+                                        <?php } else { ?>
+                                            <form class="mt-5" action="../controller/oneFormation.php?id=<?php echo $row['id'];?>" method="post">
+                                                <button type="submit" name="suivre" value="suivre" class="btn btn-secondary btn-lg">Suivre cette formation</button>
+                                            </form>
+
+                                        <?php }
+                                    } else { 
+                                    ?>
+                                        <form class="mt-5" action="../controller/oneFormation.php?id=<?php echo $row['id'];?>" method="post">
+                                            <button type="submit" name="suivre" value="suivre" class="btn btn-secondary btn-lg">Suivre cette formation</button>
+                                        </form>
+                                    <?php }
+                                } 
+                                ?>
                             </div>
                         </div>
                     </div>

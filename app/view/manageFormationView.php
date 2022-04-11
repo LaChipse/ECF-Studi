@@ -47,7 +47,7 @@
                                 
                                 
                                 <li style="list-style: none"><?php echo $secRow['titre'] ?></li>
-                                <ul style ="display: flex;">
+                                <ul>
 
                                 <?php foreach($cours as $coursRow) { ?>
 

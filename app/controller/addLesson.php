@@ -1,7 +1,6 @@
 <?php
 
 session_start();
-if(isset($_SESSION['error'])) unset($_SESSION['error']);
 
 try { 
     if(!empty($_POST)) {
@@ -23,14 +22,16 @@ try {
                 $ext = pathinfo($filename, PATHINFO_EXTENSION);
                 if(!array_key_exists($ext, $allowed)) {
                     $_SESSION['error'] = 'Extension du fichier non autorisé';
-                    header("Location: ../view/addLessonView.php");
+                    header("Location: ../view/addLessonView.php?id=$_GET[id]&formation=$_GET[formation]");
+                    die();
                 }
             
                 // Vérifie la taille du fichier - 100Mo maximum
                 $maxsize = 100 * 1024 * 1024;
                 if($filesize > $maxsize) {
                     $_SESSION['error'] = 'La taille du fichier est supérieure à la limite autorisée.';
-                    header("Location: ../view/addLessonView.php");
+                    header("Location: ../view/addLessonView.php?id=$_GET[id]&formation=$_GET[formation]");
+                    die();
                 }
             
             // Vérifie le type MIME du fichier
@@ -38,25 +39,28 @@ try {
                     // Vérifie si le fichier existe avant de le télécharger.
                     if(file_exists("../asset/dl/videos/" . $filename)){
                         $_SESSION['error'] = 'Le nom du fichier existe deja. Veuillez renommer votre fichier';
-                        header("Location: ../view/addLessonView.php");
+                        header("Location: ../view/addLessonView.php?id=$_GET[id]&formation=$_GET[formation]");
+                        die();
                     } else {
                         move_uploaded_file($_FILES["video"]["tmp_name"], "../asset/dl/videos/" . $filename);
                         var_dump("Votre fichier a été téléchargé avec succès.");
                     } 
                 } else {
                     $_SESSION['error'] = 'Il y a eu un problème de téléchargement de votre fichier. Veuillez réessayer.';
-                    header("Location: ../view/addLessonView.php");
+                    header("Location: ../view/addLessonView.php?id=$_GET[id]&formation=$_GET[formation]");
+                    die();
                 }
             } else {
                 echo "Error: " . $_FILES["video"]["error"];
-                header("Location: ../view/addLessonView.php");
+                header("Location: ../view/addLessonView.php?id=$_GET[id]&formation=$_GET[formation]");
+                die();
             }
             
         $coursModel->video = "../asset/dl/videos/" . $filename;
         $coursModel->sectionid = $_POST["sectionid"];
         $coursModel->formid = $_GET['formation'];
         $coursModel->create($coursModel);
-        
+
         if(isset($_SESSION['error'])) unset($_SESSION['error']);
         
         header("Location: ../controller/manageFormation.php?id=$_GET[id]");

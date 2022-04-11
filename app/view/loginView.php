@@ -33,6 +33,9 @@
 
       <?php } elseif (isset($_SESSION['user']) &&  $_SESSION['user'] == FALSE) { ?>
         <p class="errorMessage" style="color: red; font-size: 18px; margin-top: 15px"><?php echo "Le nom d'utilisateur ou le mot de passe est incorrect."; ?></p>
+
+      <?php } elseif (isset($_SESSION['error'])) { ?>
+        <p class="errorMessage" style="color: red; font-size: 18px; margin-top: 15px"><?php echo $_SESSION['error']; ?></p>
       <?php }
       } ?>
 

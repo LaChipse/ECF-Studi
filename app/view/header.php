@@ -1,8 +1,7 @@
 <?php 
-    session_start();
+    if(!isset($_SESSION)) session_start();
 ?>
-<header class="p-3 text-white">
-    <div class="container h-75">
+<header class="p-3 text-white" style="height: 100px">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 
             <a class="navbar-brand" href="../index.php">
@@ -47,5 +46,4 @@
             <?php } ?>
             </div>
         </div>
-    </div>
 </header>

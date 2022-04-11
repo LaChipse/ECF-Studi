@@ -14,6 +14,8 @@
 
         if ( count($user) > 0) {
 
+            unset($_SESSION['error']);
+
             foreach ($user as $row) {
 
                 if($row['role'] == 'admin') {

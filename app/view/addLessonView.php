@@ -42,7 +42,7 @@
             </div>
             <div class="mb-3">
                 <label for="video" class="form-label">Video d'explication de la lesson</label>
-                <input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
+                <input type="hidden" name="MAX_FILE_SIZE" value="100000000" />
                 <input class="form-control" type="file" name="video" id="video" required>
             </div>
             <div class="mb-3">
@@ -54,7 +54,7 @@
         </form>
 
         <?php if (isset($_SESSION['error'])) { ?>
-            <p><?php echo $_SESSION['error'];} ?></p>
+            <p class="errorMessage" style="color: red; font-size: 18px; margin-top: 15px"><?php echo $_SESSION['error'];} ?></p>
 
     </main>
     </body>
