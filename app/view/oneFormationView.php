@@ -74,8 +74,7 @@
                     </div>
                     <div class='col d-flex justify-content-end'>
                         <?php 
-                            if(isset($coursTermApprenant)) {
-                                if(in_array($_GET['cours'], $coursTermApprenant)) {
+                            if(isset($apprCoursTermArray) && in_array($_GET['cours'], $apprCoursTermArray)) {
                         ?>
                                 <button class="btn btn-success">Lesson terminée</button>
 
@@ -83,17 +82,10 @@
                                 } else {
                             ?>
                                 <form action="../controller/oneFormation.php?id=<?php echo $_GET['id'] . '&cours=' . $_GET['cours'] ?>" method="post">
-                                    <button type="submit" name="terminer" value="terminer" class="btn btn-outline-success">Lesson terminée</button>
+                                    <button type="submit" name="manageSuivi" value="terminer" class="btn btn-outline-success">Lesson terminée</button>
                                 </form>
                         <?php
                                 }
-                            } else { 
-                        ?>
-                        <form action="../controller/oneFormation.php?id=<?php echo $_GET['id'] . '&cours=' . $_GET['cours'] ?>" method="post">
-                            <button type="submit" name="terminer" value="terminer" class="btn btn-outline-success">Lesson terminée</button>
-                        </form>
-                        <?php
-                            }
                         ?>
                     </div>
                 </div>

@@ -38,13 +38,13 @@ class Model extends Db
 	* Sélection de tous les enregistrements d'une table
 	* @return array Tableau des enregistrements trouvés
 	*/
-	public function findAll(int $limit, int $offset )
+	public function findAll(int $limit, int $offset)
 	{
 		if(($limit == 0) and ($offset == 0)) {
-			$query = $this->requete("SELECT * FROM $this->table");
+			$query = $this->requete("SELECT * FROM {$this->table}");
 			return $query->fetchAll();
 		} else {
-    	$query = $this->requete("SELECT * FROM $this->table limit $limit OFFSET $offset");
+    	$query = $this->requete("SELECT * FROM {$this->table} limit $limit OFFSET $offset");
 		return $query->fetchAll();
 		}
 	}
@@ -83,6 +83,20 @@ class Model extends Db
     	// On exécute la requête
     	$query = $this->requete("SELECT * FROM {$this->table} WHERE $liste_champs", $valeurs);
 		return $query->fetchAll();
+	}
+
+
+
+	public function findName(string $valeur, int $limit, int $offset)
+	{
+
+		if(($limit == 0) and ($offset == 0)) {
+			$query = $this->requete("SELECT * FROM {$this->table} WHERE titre LIKE '%$valeur%'");
+			return $query->fetchAll();
+		} else {
+			$query = $this->requete("SELECT * FROM {$this->table} WHERE titre LIKE '%$valeur%' limit $limit OFFSET $offset");
+			return $query->fetchAll();
+		}
 	}
 
 	/**

@@ -64,7 +64,9 @@
                             <button class="btn btn-primary btnUpdate my-3">Modifier cette formation</button>
                             <div style="display: none; justify-content: space-evenly;" class="btnManage">
                                 <a href="../controller/addSection.php?id=<?php echo $_GET['id']?>&formation=<?php echo $row['id']?>" class="btn btn-secondary">Ajouter une section</a>
+                            <?php if(count($section) > 0) { ?>
                                 <a href="../controller/addLesson.php?id=<?php echo $_GET['id']?>&formation=<?php echo $row['id']?>" class="btn btn-secondary">Ajouter une lesson</a>
+                            <?php } ?>
                             </div>
                         </div>
                     </div>

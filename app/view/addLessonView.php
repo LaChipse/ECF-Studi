@@ -24,7 +24,7 @@
             <div class="mb-3">
                 <label for="sectionid" class="form-label">Section</label>
                 <select name="sectionid" class="form-select" id="sectionid">
-                    <option selected>Choisir la mission</option>
+                    <option selected>Choisir la section</option>
                 <?php foreach($section as $row) {
                 ?>
                     

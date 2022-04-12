@@ -51,7 +51,7 @@ try {
                 echo "Error: " . $_FILES["photoprofil"]["error"];
             }
             
-            $dataModel->photoprofil = "../asset/dl/img/profil" . $filename;
+            $dataModel->photoprofil = "../asset/dl/img/profil/" . $filename;
             $dataModel->specialites = $_POST["specialites"];
             $dataModel->validation = "En attente";
             $dataModel->userid = $id["id"];

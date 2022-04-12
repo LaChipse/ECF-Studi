@@ -16,6 +16,8 @@ function php_to_postgres_array( $phpArray){
     
     }
 
+
+
     require_once('../model/Formation.php');
     $formationModel = new FormationModel();
     $formation = $formationModel -> find($_GET['id']);
@@ -25,6 +27,13 @@ function php_to_postgres_array( $phpArray){
 
     require_once('../model/Cours.php');
     $coursModel = new CoursModel();
+    $coursLesson = $coursModel -> findBy(array('formid' => $_GET['id']));
+    $coursLessonId = array();
+
+    foreach ($coursLesson as $value) {
+
+        array_push($coursLessonId, strval($value['id']));
+    }
 
     require_once('../model/Apprenant.php');
     $apprenantModel = new ApprenantModel();
@@ -36,9 +45,10 @@ function php_to_postgres_array( $phpArray){
     }
 
     $apprenant = $apprenantModel -> find($apprenantId);
-    if($apprenant['coursterm'] != NULL) {
-        $coursTermApprenant = postgres_to_php_array($apprenant['coursterm']);
-    }
+
+    $apprCoursTermArray = postgres_to_php_array($apprenant['coursterm']);
+    $apprFormSuiviArray = postgres_to_php_array($apprenant['formsuivi']);
+    $apprFormTermArray = postgres_to_php_array($apprenant['formterm']);
 
     if(array_key_exists('cours', $_GET)) {
         $oneCours = $coursModel -> find($_GET['cours']);
@@ -47,38 +57,76 @@ function php_to_postgres_array( $phpArray){
     try { 
         if(!empty($_POST)) {
     
-            if(isset($_POST["terminer"])) {
+            if(isset($_POST["manageSuivi"])) {
 
-                if($apprenant['coursterm'] == NULL) 
-                {
-                    $apprenantModel->coursterm = "{" . $_GET['cours'] . "}";
+                if($_POST["manageSuivi"] == 'terminer') {
 
-                } else 
-                {   
-                    $apprArray = postgres_to_php_array($apprenant['coursterm']);
-                    array_push($apprArray, $_GET['cours']);
-                    $apprArray = php_to_postgres_array($apprArray);
+                    if(!in_array(intval($_GET['cours']), $apprCoursTermArray)){
 
-                    $apprenantModel->coursterm = $apprArray;
-                }
+                        if(($apprenant['coursterm'] == NULL) || ($apprenant['coursterm'] == '{}')) 
+                        {
+                            $apprenantModel->coursterm = "{" . $_GET['cours'] . "}";
 
-                $apprenantModel->update($apprenantId, $apprenantModel);
+                        } else 
+                        {   
+                            array_push($apprCoursTermArray, $_GET['cours']);
+                            $apprCoursTermArray = php_to_postgres_array($apprCoursTermArray);
+                            $apprenantModel->coursterm = $apprCoursTermArray;
 
-            } elseif(isset($_POST["suivre"])) {
+                            $apprCoursTermArray = postgres_to_php_array($apprCoursTermArray);
+                        }
+
+                        $apprenantModel->update($apprenantId, $apprenantModel);
+                    }
+
+                    if (array_intersect($coursLessonId, $apprCoursTermArray) == $coursLessonId) {
+
+                        $apprFormSuiviArray = array_diff($apprFormSuiviArray, array($_GET['id']));
+                        $apprFormSuiviArray = php_to_postgres_array($apprFormSuiviArray);
+
+                        $apprenantModel->formsuivi = $apprFormSuiviArray;
+
+                        if(!in_array(intval($_GET['id']), $apprFormTermArray)){
+
+                            if(($apprenant['formterm'] == NULL) || ($apprenant['formterm'] == '{}')) 
+                            {
+                                $apprenantModel->formterm = "{" . $_GET['id'] . "}";
+    
+                            } else 
+                            {   
+                                array_push($apprFormTermArray, $_GET['id']);
+                                $apprFormTermArray = php_to_postgres_array($apprFormTermArray);
+                                $apprenantModel->formterm = $apprFormTermArray;
+    
+                                $apprFormTermArray = postgres_to_php_array($apprFormTermArray);
+                            }
+    
+                            $apprenantModel->update($apprenantId, $apprenantModel);
+                        }
+
+                    }
+
+                } elseif($_POST["manageSuivi"] == 'suivre') {
+
+                    if(!in_array(intval($_GET['id']), $apprFormSuiviArray)){
                 
-                if($apprenant['formsuivi'] == NULL) 
-                {
-                    $apprenantModel->formsuivi = "{" . $_GET['id'] . "}";
+                        if(($apprenant['formsuivi'] == NULL)  || ($apprenant['formsuivi'] == '{}')) 
+                        {
+                            $apprenantModel->formsuivi = "{" . $_GET['id'] . "}";
 
-                } else 
-                {   
-                    $apprArray = postgres_to_php_array($apprenant['formsuivi']);
-                    array_push($apprArray, $_GET['id']);
-                    $apprArray = php_to_postgres_array($apprArray);
+                        } else
+                        {   
 
-                    $apprenantModel->coursterm = $apprArray;
+                            array_push($apprFormSuiviArray, $_GET['id']);
+                            $apprFormSuiviArray = php_to_postgres_array($apprFormSuiviArray);
+
+                            $apprenantModel->formsuivi = $apprFormSuiviArray;
+
+                            $apprFormSuiviArray = postgres_to_php_array($apprenant['formsuivi']);
+                        }
+                        $apprenantModel->update($apprenantId, $apprenantModel);
+                    }
                 }
-                $apprenantModel->update($apprenantId, $apprenantModel);
             }
 
         }
@@ -87,4 +135,4 @@ function php_to_postgres_array( $phpArray){
         die('echec : '.$e->getMessage());
     }
 
-    require('../view/oneFormationView.php');
+    require_once('../view/oneFormationView.php');
