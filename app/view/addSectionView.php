@@ -22,7 +22,7 @@
             </div>
 
             <div>
-                <button class="btn btn-success addSection mb-4">Ajouter section supplementaire</button>
+                <a href="#" class="btn btn-success addSection mb-4">Ajouter section supplementaire</a>
             </div>
 
             <div>

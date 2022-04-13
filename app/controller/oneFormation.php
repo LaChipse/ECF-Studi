@@ -16,8 +16,6 @@ function php_to_postgres_array( $phpArray){
     
     }
 
-
-
     require_once('../model/Formation.php');
     $formationModel = new FormationModel();
     $formation = $formationModel -> find($_GET['id']);
@@ -29,6 +27,9 @@ function php_to_postgres_array( $phpArray){
     $coursModel = new CoursModel();
     $coursLesson = $coursModel -> findBy(array('formid' => $_GET['id']));
     $coursLessonId = array();
+
+    require_once('../model/Quiz.php');
+    $quizModel = new QuizModel();
 
     foreach ($coursLesson as $value) {
 
@@ -53,6 +54,11 @@ function php_to_postgres_array( $phpArray){
     if(array_key_exists('cours', $_GET)) {
         $oneCours = $coursModel -> find($_GET['cours']);
     }
+
+    if(array_key_exists('sectionQuiz', $_GET)) {
+        $quiz = $quizModel -> findBy(array('sectionid' => $_GET['sectionQuiz']));
+    }
+
 
     try { 
         if(!empty($_POST)) {
@@ -125,6 +131,18 @@ function php_to_postgres_array( $phpArray){
                             $apprFormSuiviArray = postgres_to_php_array($apprenant['formsuivi']);
                         }
                         $apprenantModel->update($apprenantId, $apprenantModel);
+                    }
+                }
+            }else {
+
+                $correction = TRUE;
+
+                foreach ($_POST as $key => $valueRepGive) {
+
+                    $oneQuiz = $quizModel -> find($key);
+
+                    if(strval($oneQuiz['repvraie']) != strval($valueRepGive)) {
+                        $correction = FALSE;
                     }
                 }
             }

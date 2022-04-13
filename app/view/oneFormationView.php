@@ -26,23 +26,27 @@
                     ?>
 
                     <li class="mb-1">
-                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#<?php echo $secRow['titre'] ?>" aria-expanded="true">
+                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#<?php echo str_replace(' ', '_', $secRow['titre']) ?>" aria-expanded="true">
 
-                    <?php echo $secRow['titre'] ?>
+                        <?php echo $secRow['titre'] ?>
 
-                    </button>
-                    <div class="collapse show" id="<?php echo $secRow['titre'] ?>">
-                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        </button>
+                        <div class="collapse show" id="<?php echo str_replace(' ', '_', $secRow['titre']) ?>">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
 
-                        <?php foreach($cours as $coursRow) { ?>
-                                <li>
-                                    <a href="../controller/oneFormation.php?id=<?php echo $formation['id'] . '&cours=' . $coursRow['id'] ?>"><?php echo $coursRow['titre'] ?></a>
-                                </li>
+                            <?php foreach($cours as $coursRow) { ?>
+                                    <li>
+                                        <a href="../controller/oneFormation.php?id=<?php echo $formation['id'] . '&cours=' . $coursRow['id'] ?>"><?php echo $coursRow['titre'] ?></a>
+                                    </li>
                             
-                        <?php } ?>
+                            <?php } ?>
+                                    <li class="btn-toggle-nav">
+                                        <a href="../controller/oneFormation.php?id=<?php echo $formation['id'] . '&sectionQuiz=' . $secRow['id'] ?>">QUIZZ</a>
+                                    </li>
+                            </ul>
+                            
+                        </div>
 
-                        </ul>
-                    </div>
                     </li>
 
                     <?php } ?>
@@ -90,7 +94,57 @@
                     </div>
                 </div>
 
-            <?php } else { ?>
+            <?php } elseif ( isset($quiz)) { ?>
+
+                <div class="row text-center">
+                    <div class='col-6  mb-3 mt-4'>
+                        <h3>QUIZ</h3>
+                    </div>
+                </div>
+
+                <div class="row text-center">
+                    <div class='col-6  mb-3 mt-4'>
+                        <form action="oneFormation.php?id=<?php echo $_GET['id'] . '&sectionQuiz=' . $_GET['sectionQuiz']?>" method="POST">
+                
+                <?php foreach ($quiz as $value) {
+
+                    $reponseQuiz = array();
+                    
+                    $reponseQuizFausse = postgres_to_php_array($value['repfausse']);
+
+                    foreach($reponseQuizFausse as $valueRep) {
+
+                        array_push($reponseQuiz, $valueRep);
+
+                    }
+
+                    array_push($reponseQuiz, $value['repvraie']);
+                    shuffle($reponseQuiz);
+
+                ?>
+
+                            <?php echo $value['question'];
+                                foreach ($reponseQuiz as $valueRadio) {
+                                ?>
+                                    <input type="radio" required name="<?php echo $value["id"] ?>" value="<?php echo $valueRadio ?>"><?php echo $valueRadio ?><br>
+                                <?php } 
+                            }
+                            if (isset($correction)) {
+                                if($correction == TRUE) { ?>
+
+                                    <p style="color: green; font-size: 18px; margin-top: 15px">Correct !</p>
+                                <?php } elseif ($correction == FALSE) { 
+                                    ?>
+
+                                    <p style="color: red; font-size: 18px; margin-top: 15px">Faux!</p>
+                                <?php }
+                                }?>
+                            <button type="submit" class="btn btn-primary">Corriger</button>
+                        </form>
+                    </div>
+                </div>
+            <?php
+            } else { ?>
 
                 <div class="row">
                     <div class='col d-flex justify-content-center'>
@@ -101,7 +155,5 @@
             <?php } ?> 
             </main>
         </div>
-        <script type="text/javascript" src="../asset/js/fade.js"> </script>
-        <script type="text/javascript" src="../asset/js/sidebar.js"> </script> 
     </body>
 </html>

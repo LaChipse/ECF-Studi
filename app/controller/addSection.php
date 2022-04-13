@@ -12,8 +12,9 @@ try {
             $sectionModel->formid = $_GET['formation'];
 
             $sectionModel->create($sectionModel);
-            header("Location: ../controller/manageFormation.php?id=$_GET[id]");
         }
+
+        header("Location: ../controller/manageFormation.php?id=$_GET[id]");
             
     } else {
 

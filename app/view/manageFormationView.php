@@ -67,6 +67,9 @@
                             <?php if(count($section) > 0) { ?>
                                 <a href="../controller/addLesson.php?id=<?php echo $_GET['id']?>&formation=<?php echo $row['id']?>" class="btn btn-secondary">Ajouter une lesson</a>
                             <?php } ?>
+                            <?php if(count($section) > 0) { ?>
+                                <a href="../controller/addQuiz.php?id=<?php echo $_GET['id']?>&formation=<?php echo $row['id']?>" class="btn btn-secondary">Ajouter un quiz</a>
+                            <?php } ?>
                             </div>
                         </div>
                     </div>

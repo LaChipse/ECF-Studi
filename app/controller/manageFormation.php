@@ -11,6 +11,9 @@
     require_once('../model/Cours.php');
     $coursModel = new CoursModel();
 
+    require_once('../model/Quiz.php');
+    $quizModel = new QuizModel();
+
     require_once('../view/manageFormationView.php');
 
 
