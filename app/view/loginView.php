@@ -27,15 +27,17 @@
         <button type="submit" class="btn btn-primary">Se connecter</button>
       </div>
 
+      <!-- Affichage des erreurs si il y en a eu -->
       <?php if ( isset($_SESSION['user']) ) {
               if ( ($_SESSION['user'] == FALSE) && (isset($_SESSION['validate']) && $_SESSION['validate'] == FALSE )) { ?>
-        <p class="errorMessage" style="color: red; font-size: 18px; margin-top: 15px"><?php echo "Votre candidature n'a pas encore été validé"; ?></p>
+        <p class="errorMessage" style="color: red; font-size: 18px; margin-top: 15px"><?php echo "Votre candidature n'a pas encore été validé"; unset($_SESSION['user']);?></p>
 
       <?php } elseif (isset($_SESSION['user']) &&  $_SESSION['user'] == FALSE) { ?>
-        <p class="errorMessage" style="color: red; font-size: 18px; margin-top: 15px"><?php echo "Le nom d'utilisateur ou le mot de passe est incorrect."; ?></p>
+        <p class="errorMessage" style="color: red; font-size: 18px; margin-top: 15px"><?php echo "Le nom d'utilisateur ou le mot de passe est incorrect."; unset($_SESSION['user'])?></p>
 
       <?php } elseif (isset($_SESSION['error'])) { ?>
-        <p class="errorMessage" style="color: red; font-size: 18px; margin-top: 15px"><?php echo $_SESSION['error']; ?></p>
+        <p class="errorMessage" style="color: red; font-size: 18px; margin-top: 15px"><?php echo $_SESSION['error']; 
+        unset($_SESSION['error']); ?></p>
       <?php }
       } ?>
 

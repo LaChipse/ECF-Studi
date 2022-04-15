@@ -33,10 +33,11 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
 
+        <!-- Affichage erreur si il y en a eu -->
         <?php if(isset($_SESSION['error'])) { ?>
             <p class="errorMessage" style="color: red; font-size: 18px; margin-top: 15px"><?php echo $_SESSION['error'] ?></p>
 
-        <?php } ?>
+        <?php unset($_SESSION['error']); } ?>
 
     </main>
     </body>

@@ -19,6 +19,7 @@
         <div class="news container my-4">
 
         <div class="row mt-5">
+            <!-- Affichage de toutes les candidatures non validées ou refusées -->
         <?php if ( count($instructeur) > 0) 
         { 
         ?>

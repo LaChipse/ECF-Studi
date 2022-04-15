@@ -19,17 +19,20 @@
             <div class="mb-3 d-flex justify-content-between">
                 <div class="mr-2" style="width: 48%">
                     <label for="nom" class="form-label">Nom</label>
-                    <input type="text" name="nom" class="form-control" id="nom" required>
+                    <input type="text" name="nom" pattern="^[a-zA-Z \-,.ùüäàâéëêèïîôö]*$" class="form-control" id="nom" required>
+                    <small style="display:none; color: red" class="form-text validNom">Veuillez mettre un nom conforme (pas de chiffres ou caractéres spéciaux).</small>
                 </div>
                 <div class="ml-2" style="width: 48%">
                     <label for="prenom" class="form-label">Prenom</label>
-                    <input type="text" name="prenom" class="form-control" id="prenom" required>
+                    <input type="text" name="prenom" pattern="^[a-zA-Z \-,.ùüäàâéëêèïîôö]*$" class="form-control" id="prenom" required>
+                    <small style="display:none; color: red" class="form-text validPrenom">Veuillez mettre un nom conforme (pas de chiffres ou caractéres spéciaux).</small>
                 </div>
             </div>
             <div class="mb-3">
                 <label for="mail" class="form-label">Mail</label>
                 <input type="email" name="mail" class="form-control" id="mail" required>
             </div>
+            <!-- Controle le rôle pour changer de type de formulaire -->
         <?php if($_GET["role"] == "apprenant") 
         {
         ?>
@@ -39,7 +42,8 @@
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Mot de passe</label>
-                <input type="text" name="password" class="form-control" id="password" required>
+                <input type="text" name="password" pattern="^(?=.{8,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$" id="password" class="form-control" required>
+                <small class="form-text">Le mot de passe doit faire au moins 8 caractéres, un chiffre, une lettre minuscule et majuscule ainsi qu'un caractére spécial.</small>
             </div>
 
         <?php
@@ -57,16 +61,57 @@
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Mot de passe</label>
-                <input type="text" name="password" class="form-control" id="password" required>
+                <input type="text" class="form-control" name="password" pattern="^(?=.{8,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$" id="password" class="form-control" required>
+                <small class="form-text">Le mot de passe doit faire au moins 8 caractéres, un chiffre, une lettre minuscule et majuscule ainsi qu'un caractére spécial.</small>
             </div>
         <?php 
         }
         ?>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        <!-- Affichage des erreurs si il y en a eu -->
+        <?php if (isset($_SESSION['error'])) { ?>
+        <p class="errorMessage" style="color: red; font-size: 18px; margin-top: 15px"><?php echo $_SESSION['error']; 
+        ?></p>
+        <?php unset($_SESSION['error']); } ?>
 
 
 
     </main>
+        <script>
+            $( document ).ready(function() {
+
+                $("#password").on('input', function(e) {
+
+                    if (/^(?=.{6,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$/.test(this.value)) {
+
+                        $("small").css("color", "green")
+                    } else {
+                        $("small").css("color", "red")
+                    }
+                })
+
+                $("#nom").on('input', function(e) {
+
+                    if (/^[a-zA-Z \-,.ùüäàâéëêèïîôö]*$/.test(this.value)) {
+
+                        $(".validNom").css("display", "none")
+                    } else {
+                        $(".validNom").css("display", "block")
+                    }
+                })
+
+                $("#prenom").on('input', function(e) {
+
+                    if (/^[a-zA-Z \-,.ùüäàâéëêèïîôö]*$/.test(this.value)) {
+
+                        $(".validPrenom").css("display", "none")
+                    } else {
+                        $(".validPrenom").css("color", "red")
+                    }
+                })
+            })
+
+        </script>
     </body>
 </html>

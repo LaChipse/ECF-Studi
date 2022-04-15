@@ -2,6 +2,7 @@
 
 session_start();
 
+// Conversion array postgresql en array php
 function postgres_to_php_array($postgresArray){
 
     $postgresStr = trim($postgresArray,"{}");
@@ -9,13 +10,14 @@ function postgres_to_php_array($postgresArray){
     return $elmts;
     
     }
-    
+
 function php_to_postgres_array( $phpArray){
     
     return "{".join(",",$phpArray)."}";
     
     }
 
+// Recuperation des données suivant id de la formation et de l'apprenant
     require_once('../model/Formation.php');
     $formationModel = new FormationModel();
     $formation = $formationModel -> find($_GET['id']);
@@ -51,6 +53,7 @@ function php_to_postgres_array( $phpArray){
     $apprFormSuiviArray = postgres_to_php_array($apprenant['formsuivi']);
     $apprFormTermArray = postgres_to_php_array($apprenant['formterm']);
 
+    // Recuperation cours ou quiz selon clique du bouton dans nav latérale
     if(array_key_exists('cours', $_GET)) {
         $oneCours = $coursModel -> find($_GET['cours']);
     }
@@ -59,7 +62,8 @@ function php_to_postgres_array( $phpArray){
         $quiz = $quizModel -> findBy(array('sectionid' => $_GET['sectionQuiz']));
     }
 
-
+    // Lors du clique suir bouton terminer d'une lecon, ajout de l'id de cette leçon dans les leçons terminées de l'apprenant puis verification si toutes les leçons de la formations sont terminées.
+    // Si oui, alors formations ajoutée dans formation terminée de l'apprenant
     try { 
         if(!empty($_POST)) {
     
@@ -135,14 +139,26 @@ function php_to_postgres_array( $phpArray){
                 }
             }else {
 
+                // Verification des réponses du quiz données par l'apprenant
                 $correction = TRUE;
+                $countRep = 0;
+                $repfalse = array();
+                $repTrue = array();
+                $numbQuestion = array();
 
                 foreach ($_POST as $key => $valueRepGive) {
 
+                    $countRep = $countRep + 1;
+
                     $oneQuiz = $quizModel -> find($key);
+                    
 
                     if(strval($oneQuiz['repvraie']) != strval($valueRepGive)) {
                         $correction = FALSE;
+                        array_push($repfalse, $valueRepGive);
+                        array_push($repTrue, strval($oneQuiz['repvraie']));
+                        array_push($numbQuestion, $countRep);
+
                     }
                 }
             }

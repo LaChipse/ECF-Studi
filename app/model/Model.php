@@ -36,9 +36,11 @@ class Model extends Db
 
 	/**
 	* Sélection de tous les enregistrements d'une table
+	* @param id $limit nombre de données retournées maximum
+	* @param id $offset nombre de ligne exclue
 	* @return array Tableau des enregistrements trouvés
 	*/
-	public function findAll(int $limit, int $offset)
+	public function findAll(int $limit = 0, int $offset = 0)
 	{
 		if(($limit == 0) and ($offset == 0)) {
 			$query = $this->requete("SELECT * FROM {$this->table}");
@@ -86,7 +88,13 @@ class Model extends Db
 	}
 
 
-
+	/**
+	* Sélection de plusieurs enregistrements suivant la presence ou nom d'une chaîne de caractéres
+	* @param string chaîne de caractéres a vérifiée
+	* @param id $limit nombre de données retournées maximum
+	* @param id $offset nombre de ligne exclue
+	* @return array Tableau des enregistrements trouvés
+	*/
 	public function findName(string $valeur, int $limit, int $offset)
 	{
 

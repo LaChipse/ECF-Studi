@@ -1,20 +1,34 @@
 <?php
 
+session_start();
+
+// verifie si formulaire a été submit
 try { 
-    
     if(!empty($_POST)) {
 
         require_once('../model/Users.php');
         $userModel = new UserModel();
+        $usersAll = $userModel -> findAll();
 
         $userModel->nom = $_POST["nom"];
         $userModel->prenom = $_POST["prenom"];
-        $userModel->mail = $_POST["mail"];
+
+        // verifie si l'email envoyé est unique sinon envoie erreur
+        foreach ($usersAll as $value) {
+            if(strval($value['mail']) == strval($_POST["mail"] )) {
+                $_SESSION['error'] = "Email déjà existante.";
+                header("Location: ../view/inscriptionView.php?role=$_GET[role]");
+                die();
+            } else {
+                $userModel->mail = $_POST["mail"];
+            }
+        }
+        
         $userModel->password = md5($_POST["password"]);
         $userModel->datecreated = date("Y-m-d");
         $userModel->role = $_GET['role'];
-        $id = $userModel->create($userModel);
 
+        // verifie le rôle du visiteur grâce aux bouton cliqué
         if (strval($_GET['role']) === "instructeur") {
             require_once('../model/Instructeur.php');
             $dataModel = new InstructeurModel();
@@ -29,26 +43,40 @@ try {
             
                 // Vérifie l'extension du fichier
                 $ext = pathinfo($filename, PATHINFO_EXTENSION);
-                if(!array_key_exists($ext, $allowed)) die("Erreur : Veuillez sélectionner un format de fichier valide.");
+                if(!array_key_exists($ext, $allowed)) {
+                    $_SESSION['error'] = "Veuillez sélectionner un format de fichier valide.";
+                    header("Location: ../view/inscriptionView.php?role=$_GET[role]");
+                    die();
+                }
             
                 // Vérifie la taille du fichier - 5Mo maximum
                 $maxsize = 5 * 1024 * 1024;
-                if($filesize > $maxsize) die("Error: La taille du fichier est supérieure à la limite autorisée.");
+                if($filesize > $maxsize) {
+                    $_SESSION['error'] = "Taille du fichier trop grande.";
+                    header("Location: ../view/inscriptionView.php?role=$_GET[role]");
+                    die();
+                }
             
                 // Vérifie le type MIME du fichier
                 if(in_array($filetype, $allowed)){
                     // Vérifie si le fichier existe avant de le télécharger.
-                    if(file_exists("../asset/dl/img/profil/" . $filename)){
-                        echo $filename . " existe déjà.";
+                    if(file_exists("../asset/dl/img/profil/" . $filename)) {
+                        $_SESSION['error'] = "Nom du fichier existe déjà. Veuillez le renommer.";
+                        header("Location: ../view/inscriptionView.php?role=$_GET[role]");
+                        die();
                     } else {
                         move_uploaded_file($_FILES["photoprofil"]["tmp_name"], "../asset/dl/img/profil/" . $filename);
-                        echo "Votre fichier a été téléchargé avec succès.";
+                        $_SESSION['file'] = TRUE;
                     } 
                 } else {
-                    echo "Error: Il y a eu un problème de téléchargement de votre fichier. Veuillez réessayer."; 
+                    $_SESSION['error'] = "Il y a eu un problème de téléchargement de votre fichier. Veuillez réessayer.";
+                    header("Location: ../view/inscriptionView.php?role=$_GET[role]");
+                    die();
                 }
             } else {
                 echo "Error: " . $_FILES["photoprofil"]["error"];
+                header("Location: ../view/inscriptionView.php?role=$_GET[role]");
+                die();
             }
             
             $dataModel->photoprofil = "../asset/dl/img/profil/" . $filename;
@@ -64,6 +92,7 @@ try {
             $dataModel->userid = $id["id"];
         }
 
+        $id = $userModel->create($userModel);
         $dataModel->create($dataModel);
         header("Location: ../controller/login.php");
     }

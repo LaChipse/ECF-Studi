@@ -43,7 +43,7 @@
             ?>
 
             <div class="row mt-5">
-
+            <!-- Affichage des formations -->
             <?php
                 foreach($formations as $row) {
 
@@ -54,9 +54,11 @@
                             <img class="card-img-top rounded" style="height: 350px" src="<?php echo $row['image'] ?>">
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $row['titre'] ?></h5>
+                                <!-- Controle si le visiteur est connecté et est un apprenant -->
                                 <?php if (!isset($_SESSION['user']) || $_SESSION['user'] == FALSE || strval($_SESSION['role']) != 'apprenant') { ?>
                                     <a class="mt-5 btn btn-secondary btn-lg" href='../controller/login.php' role="button">Suivre cette formation </a>
-                                
+                                    
+                                    <!-- Controle si la formation est dans les formations finies de l'apprenant -->
                                 <?php } elseif (isset($formTermApprenant) && is_array($formTermApprenant) && in_array($row['id'], $formTermApprenant)) 
                                     {
                                 ?>

@@ -25,6 +25,7 @@
                 <label for="sectionid" class="form-label">Section</label>
                 <select name="sectionid" class="form-select" id="sectionid">
                     <option selected>Choisir la section</option>
+                    <!-- Affichage de toutes les sections possibles -->
                 <?php foreach($section as $row) {
                 ?>
                     
@@ -52,9 +53,12 @@
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        
+        <!-- Affichage erreur si il y en a eu -->
+        <?php if(isset($_SESSION['error'])) { ?>
+            <p class="errorMessage" style="color: red; font-size: 18px; margin-top: 15px"><?php echo $_SESSION['error'] ?></p>
 
-        <?php if (isset($_SESSION['error'])) { ?>
-            <p class="errorMessage" style="color: red; font-size: 18px; margin-top: 15px"><?php echo $_SESSION['error'];} ?></p>
+        <?php unset($_SESSION['error']); }?>
 
     </main>
     </body>

@@ -1,3 +1,5 @@
+/* Permet de rangé dans l'ordre alphabetique les tableaux */
+
 const compare = (ids, asc) => (row1, row2) => {
     const tdValue = (row, ids) => row.children[ids].textContent;
     const tri = (v1, v2) => v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2);

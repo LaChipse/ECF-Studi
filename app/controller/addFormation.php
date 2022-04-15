@@ -3,14 +3,26 @@
 session_start();
 
 try { 
+    // verifie si formulaire a été submit
     if(!empty($_POST)) {
 
         if(isset($_SESSION['error'])) unset($_SESSION['error']);
 
         require_once('../model/Formation.php');
         $formationModel = new FormationModel();
+        $formationAll = $formationModel -> findAll();
 
-        $formationModel->titre = $_POST["titre"];
+        // Verfie si la formation existe déja
+        foreach ($formationAll as $value) {
+            if(strval($value['titre']) == strval($_POST["titre"] )) {
+                $_SESSION['error'] = "Titre déjà existante.";
+                header("Location: ../view/addFormationView.php");
+                die();
+            } else {
+                $formationModel->titre = $_POST["titre"];
+            }
+        }
+
         $formationModel->description = $_POST["description"];
 
             // Vérifie si le fichier a été uploadé sans erreur.
@@ -25,6 +37,7 @@ try {
                 if(!array_key_exists($ext, $allowed)) {
                     $_SESSION['error'] = 'Extension du fichier non autorisé';
                     header("Location: ../view/addFormationView.php");
+                    die();
                 }
             
                 // Vérifie la taille du fichier - 5Mo maximum
@@ -32,6 +45,7 @@ try {
                 if($filesize > $maxsize) {
                     $_SESSION['error'] = 'La taille du fichier est supérieure à la limite autorisée.';
                     header("Location: ../view/addFormationView.php");
+                    die();
                 }
             
                 // Vérifie le type MIME du fichier
@@ -40,17 +54,20 @@ try {
                     if(file_exists("../asset/dl/img/formation/" . $filename)){
                         $_SESSION['error'] = 'Le nom du fichier existe deja. Veuillez renommer votre fichier';
                         header("Location: ../view/addFormationView.php");
+                        die();
+                        // Telecharge fichier dans repertoire
                     } else {
                         move_uploaded_file($_FILES["image"]["tmp_name"], "../asset/dl/img/formation/" . $filename);
-                        echo "Votre fichier a été téléchargé avec succès.";
                     } 
                 } else {
                     $_SESSION['error'] = 'Il y a eu un problème de téléchargement de votre fichier. Veuillez réessayer.';
                     header("Location: ../view/addFormationView.php");
+                    die();
                 }
             } else {
                 echo "Error: " . $_FILES["image"]["error"];
                 header("Location: ../view/addFormationView.php");
+                die();
             }
             
         $formationModel->image = "../asset/dl/img/formation/" . $filename;

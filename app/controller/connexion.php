@@ -12,10 +12,10 @@
 
         $user = $userModel->findBy(array('mail' => $mail, 'password' => md5($mdp)));
 
+        // verifie si on a trouver une correspondance entre mail et password
         if ( count($user) > 0) {
 
-            unset($_SESSION['error']);
-
+            // verifie le role du visiteur qui va se connecter
             foreach ($user as $row) {
 
                 if($row['role'] == 'admin') {
@@ -38,6 +38,7 @@
 
                     if ( count($instructeur) > 0) {
 
+                        // si instructeur alors on verifie la validitée de sa candidature
                         foreach ($instructeur as $row) {
 
                             if($row['validation'] == 'validée') {

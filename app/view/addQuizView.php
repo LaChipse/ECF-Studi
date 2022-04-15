@@ -22,6 +22,7 @@
                 <label for="sectionid" class="form-label">Section</label>
                 <select name="sectionid" class="form-select" id="sectionid">
                     <option selected>Choisir la section</option>
+                    <!-- Affichage de toutes les sections possibles -->
                 <?php foreach($section as $row) {
                 ?>
                     

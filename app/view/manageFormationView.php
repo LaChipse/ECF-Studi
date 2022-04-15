@@ -23,6 +23,7 @@
             
 
             <div class="row mt-5 d-flex justify-content-between">
+                <!-- Affichage des sections de la formation -->
 
             <?php
                 foreach($formation as $row) {
@@ -62,6 +63,7 @@
                             } ?>
                             </ul>
                             <button class="btn btn-primary btnUpdate my-3">Modifier cette formation</button>
+                            <!-- Controle des actions de management de l'instructeur sur sa formation -->
                             <div style="display: none; justify-content: space-evenly;" class="btnManage">
                                 <a href="../controller/addSection.php?id=<?php echo $_GET['id']?>&formation=<?php echo $row['id']?>" class="btn btn-secondary">Ajouter une section</a>
                             <?php if(count($section) > 0) { ?>

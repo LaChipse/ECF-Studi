@@ -2,7 +2,8 @@
 
 session_start();
 
-try { 
+try {
+    // verifie si formulaire a été submit
     if(!empty($_POST)) {
 
         require_once('../model/Cours.php');

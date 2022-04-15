@@ -10,7 +10,7 @@
             
             <ul class="nav col-auto me-auto mb-2 justify-content-center mb-md-0">
                 
-                
+                <!-- Affichage de la navigation suivant la connexion ou le rôle du visiteur -->
             <?php if (!isset($_SESSION['user']) || $_SESSION['user'] == FALSE) { ?>
 
                 <li><a href="../controller/inscription.php?role=apprenant" class="nav-link px-2 text-white">Devenir apprenant</a></li>

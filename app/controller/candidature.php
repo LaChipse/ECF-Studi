@@ -4,6 +4,7 @@ require_once('../model/Instructeur.php');
 
 $instructeurModel = new InstructeurModel();
 
+// attribut la réponse de l'administrateur au champ validation de l'instructeur correspondant
 if(isset($_GET['valid'])) {
     if(strval($_GET['valid']) === 'right') {
 

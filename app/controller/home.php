@@ -1,13 +1,14 @@
 <?php
 
     session_start();
-
+    // Conversion array postgresql en array php
     function postgres_to_php_array($postgresArray){
         $postgresStr = trim($postgresArray,"{}");
         $elmts = explode(",",$postgresStr);
         return $elmts;   
     }
-        
+    
+    // Conversion array php en array postgresql
     function php_to_postgres_array( $phpArray){
         return "{".join(",",$phpArray)."}";
     }
@@ -17,7 +18,7 @@
     require_once('../model/Formation.php');
     $formationModel = new FormationModel();
 
-
+    // Mise en place des variables pour la paginations
     $row_count = $formationModel->countVar();
     $count = $row_count['count'];
 
@@ -27,19 +28,20 @@
         $page = $_GET['page'];
     }
 
-    $per_page  = 10;
+    // Limite de formations visible par page
+    $per_page  = 3;
     $offset = ($page - 1) * $per_page;
 
     $total_pages = ceil($count / $per_page);
 
-
+    // Recherche de la formation selon la valeur de l'input dans la barre de recherche
     if(isset($_POST['search']) && ($_POST['search'] != "")){
         $formations = $formationModel->findName($_POST['search'],$per_page, $offset);
     } else {
         $formations = $formationModel->findAll($per_page, $offset);
     }
 
-
+    // Si il s'agit d'un apprenant nouvelles fonctionnalités visibles
     if(isset($_SESSION['role']) && ($_SESSION['role'] == 'apprenant')) {
 
         require_once('../model/Apprenant.php');
@@ -58,7 +60,7 @@
         $apprenant = $apprenantModel -> find($apprenantId);
         $formSuiviApprenant = postgres_to_php_array($apprenant['formsuivi']);
 
-
+        // Fonction de trie des formations
         if(isset($_POST['trieForm'])) {
 
             if (strval($_POST['trieForm']) == 'progression') {
@@ -89,7 +91,7 @@
                 }
             }
 
-
+        // Ajout dans array des formations suivi de l'apprenant lors du clique sur le bouton "suivre la formation"
         if(($apprenant['formterm'] != NULL) || ($apprenant['formterm'] != '{}')) {
 
             $formTermApprenant = postgres_to_php_array($apprenant['formterm']);
