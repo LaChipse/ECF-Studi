@@ -11,7 +11,7 @@
         require('../view/header.php');
         ?>
         
-        <main class="container form-signin col-lg-5 mt-5" style="margin: auto">
+        <main class="container form-signin col-sm-8 col-lg-5 mt-5" style="margin: auto">
 
         <form enctype="multipart/form-data" class="mt-5" style="margin: auto" action="../controller/inscription.php?role=<?php echo $_GET["role"]?>" method="post">
         <h1 class="mb-5 fw-normal text-center">Inscription</h1>
@@ -67,11 +67,11 @@
         <?php 
         }
         ?>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn">S'inscrire</button>
         </form>
         <!-- Affichage des erreurs si il y en a eu -->
         <?php if (isset($_SESSION['error'])) { ?>
-        <p class="errorMessage" style="color: red; font-size: 18px; margin-top: 15px"><?php echo $_SESSION['error']; 
+        <p class="msgError"><?php echo $_SESSION['error']; 
         ?></p>
         <?php unset($_SESSION['error']); } ?>
 

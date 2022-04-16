@@ -15,9 +15,9 @@
 
             <h1>Formations Eco-It</h1>
             <div class="row mb-2 d-flex justify-content-end">
-                <form class="col-4 d-flex form-group" action="../controller/home.php" method="post">
+                <form class="col col-sm-6 col-lg-4 d-flex form-group" action="../controller/home.php" method="post">
                     <input class="form-control mr-sm-2" type="search" name="search" placeholder="Rechercher une formation" aria-label="Search">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    <button type="submit" class="btn"><i class="fa fa-search" aria-hidden="true"></i></button>
                 </form>
             </div>
 
@@ -25,15 +25,15 @@
             ?>
 
             <div class="row mb-5 d-flex">
-                <div class="col d-flex justify-content-end">
+                <div class="col-sm d-flex justify-content-end">
                 <form class="form-grou" style="margin-right: 10px" action="../controller/home.php" method="post">
-                    <button type="submit" name="trieForm" value="progression" class="btn btn-secondary">Formation en cours</button>
+                    <button type="submit" name="trieForm" value="progression" class="btn btn-sm">Formation en cours</button>
                 </form>
                 <form class=" form-group" style="margin-right: 10px" action="../controller/home.php" method="post">
-                    <button type="submit" name="trieForm" value="terminer" class="btn btn-secondary">Formation terminée</button>
+                    <button type="submit" name="trieForm" value="terminer" class="btn btn-sm">Formation terminée</button>
                 </form>
-                <form class=" form-group" style="margin-right: 10px" action="../controller/home.php" method="post">
-                    <button type="submit" name="trieForm" value="allForm" class="btn btn-secondary">Toutes les formations</button>
+                <form class=" form-group" action="../controller/home.php" method="post">
+                    <button type="submit" name="trieForm" value="allForm" class="btn btn-sm">Toutes les formations</button>
                 </form>
             </div>
             </div>
@@ -50,30 +50,34 @@
             ?>
                 <div class="col d-flex justify-content-center mb-5">
                     <div style="width: 34rem;">
-                        <div class="card h-100">
+                        <div class="card" style="height: 550px">
                             <img class="card-img-top rounded" style="height: 350px" src="<?php echo $row['image'] ?>">
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $row['titre'] ?></h5>
+                                <p class="card-text"><?php echo $row['description'] ?></p>
                                 <!-- Controle si le visiteur est connecté et est un apprenant -->
                                 <?php if (!isset($_SESSION['user']) || $_SESSION['user'] == FALSE || strval($_SESSION['role']) != 'apprenant') { ?>
-                                    <a class="mt-5 btn btn-secondary btn-lg" href='../controller/login.php' role="button">Suivre cette formation </a>
+                                <div class="btnFormationCard">
+                                    <a class="mt-3 btn btn-lg" href='../controller/login.php' role="button">Suivre cette formation </a>
+                                </div>
                                     
                                     <!-- Controle si la formation est dans les formations finies de l'apprenant -->
                                 <?php } elseif (isset($formTermApprenant) && is_array($formTermApprenant) && in_array($row['id'], $formTermApprenant)) 
                                     {
                                 ?>
                                 <div class="d-flex justify-content-evenly">
-                                    <a class="mt-5 btn btn-success" href='#' role="button">Formation finie !</a>
-                                    <a class="mt-5 btn btn-outline-success" href='../controller/oneFormation.php?id=<?php echo $row['id']?>' role="button">Revoir la formation</a>
+                                    <a class="mt-5 btn btn-lg" style="margin-right: 5px;" href='#' role="button">Formation finie !</a>
+                                    <a class="mt-5 btn btn-lg" style="margin-left: 5px;" href='../controller/oneFormation.php?id=<?php echo $row['id']?>' role="button">Revoir la formation</a>
                                 </div>
                                 <?php } elseif (isset($formSuiviApprenant) && in_array($row['id'], $formSuiviApprenant)) 
                                     {
                                 ?>
-                                    <a class="mt-5 btn btn-secondary btn-lg" href='../controller/oneFormation.php?id=<?php echo $row['id']?>' role="button">Continuer cette formation </a>
-
+                                <div class="btnFormationCard">
+                                    <a class="mt-3 btn btn-lg" href='../controller/oneFormation.php?id=<?php echo $row['id']?>' role="button">Continuer cette formation </a>
+                                </div>
                                 <?php } else { ?>
-                                    <form class="mt-5" action="../controller/oneFormation.php?id=<?php echo $row['id']?>" method="post">
-                                        <button type="submit" name="manageSuivi" value="suivre" class="btn btn-secondary btn-lg">Suivre cette formation</button>
+                                    <form class="mt-5 btnFormationCard" action="../controller/oneFormation.php?id=<?php echo $row['id']?>" method="post">
+                                        <button type="submit" name="manageSuivi" value="suivre" class="btn btn-lg">Suivre cette formation</button>
                                     </form>
 
                                 <?php

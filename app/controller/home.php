@@ -104,6 +104,7 @@
                     array_push($coursLessonId, strval($valueCours['id']));
                 }
 
+                // Verfication ajout ou non dun nouveau cours
                 if (array_intersect($coursLessonId, $apprCoursTermArray) != $coursLessonId) {
 
                     $formTermApprenant = array_diff($formTermApprenant, array($idForm));

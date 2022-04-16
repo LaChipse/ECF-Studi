@@ -11,7 +11,7 @@
         require_once('../view/header.php');
         ?>
         
-        <main class="container form-signin col-lg-5 mt-5" style="margin: auto">
+        <main class="container form-signin col-sm-8 col-lg-5 mt-5" style="margin: auto">
 
         <form enctype="multipart/form-data" class="mt-5" style="margin: auto" action="../controller/addFormation.php?id=<?php echo $_SESSION['id'] ?>" method="post">
         <h1 class="mb-5 fw-normal text-center">Ajout formation</h1>
@@ -30,12 +30,12 @@
                 <textarea class="form-control" name="description" id="description" rows="3" required></textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn">Envoyer</button>
         </form>
 
         <!-- Affichage erreur si il y en a eu -->
         <?php if(isset($_SESSION['error'])) { ?>
-            <p class="errorMessage" style="color: red; font-size: 18px; margin-top: 15px"><?php echo $_SESSION['error'] ?></p>
+            <p class="msgError"><?php echo $_SESSION['error']; ?></p>
 
         <?php unset($_SESSION['error']); } ?>
 

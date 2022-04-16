@@ -13,7 +13,7 @@
         $section = $sectionnModel -> findBy(array('formid' => $_GET['formation']));
         ?>
         
-        <main class="container form-signin col-lg-5 mt-5" style="margin: auto">
+        <main class="container form-signin col-sm-8 col-lg-5 mt-5" style="margin: auto">
 
         <form class="mt-5" style="margin: auto" action="../controller/addQuiz.php?id=<?php echo $_GET['id']?>&formation=<?php echo $_GET['formation']?>" method="post">
         <h1 class="mb-5 fw-normal text-center">Ajout quiz</h1>
@@ -40,7 +40,7 @@
             </div>
 
             <div>
-                <button class="btn btn-success addRep mb-4">Ajouter une mauvaise réponse (max 3)</button>
+                <button class="btn addRep mb-4">Ajouter une mauvaise réponse (max 3)</button>
             </div>
 
             <div class="mb-">
@@ -49,7 +49,7 @@
             </div>
 
             <div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn ">Envoyer</button>
             </div>
         </form>
 
