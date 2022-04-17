@@ -1,16 +1,18 @@
 <?php
 
+require_once("../config.php");
+
 class Db extends PDO
 {
     // Instance unique de la classe
     private static $_instance = null;
 
     // Informations de connexion
-    private const DBHOST = 'localhost';
-    private const DBUSER = 'postgres';
-    private const DBPORT = '5432;';
-    private const DBPASS = 'Mickey3d!';
-    private const DBNAME = 'EcoIT';
+    private const DBHOST = HOST;
+    private const DBUSER = USER;
+    private const DBPORT = PORT;
+    private const DBPASS = PASS;
+    private const DBNAME = NAME;
 
     private function __construct()
     {

@@ -85,7 +85,7 @@
 
                 <div class="row mb-4">
                     <div class='col-12 m-4'>
-                        <p class="p-3"><?php echo $oneCours['description'] ?></p>
+                        <p class="p-3 text-justify"><?php echo $oneCours['description'] ?></p>
                     </div>
                     <div class='col d-flex justify-content-end'>
                         <!-- Affichage si le cours est dans les leçons terminées de l'apprenant sinon le rajoute au clique sur le bouton Leçon terminée --> 
@@ -192,7 +192,14 @@
 
                 <div class="row">
                     <div class='col d-flex justify-content-center'>
-                        <h1><?php echo $formation['titre'] ?></h1>
+                        <h1 class="m-4 p-4"><?php echo $formation['titre'] ?></h1>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class='col text-center'>
+                        <h2 class="mt-5 pt-5 " style="color: #5AAA1D">Eco-It</h2>
+                        <h3 style="color: #8ACC88">Le PROJET of Eco Web</h3>
                     </div>
                 </div>
 

@@ -98,6 +98,10 @@ h3 {
     box-shadow: 0 0 0 .25rem rgba(138, 204, 136, .25);
 }
 
+.navbar {
+    z-index: 1000000;
+}
+
 .navbar-toggler {
     border: 1px solid #5AAA1D;
     background-color: white;
@@ -193,8 +197,9 @@ nav {
     align-items: center;
     padding: 0rem .25rem;
     font-weight: 600;
-    color: rgba(0, 0, 0, .65);
+    color: white;
     background-color: transparent;
+    font-size: 20px;
     border: 0;
 }
 

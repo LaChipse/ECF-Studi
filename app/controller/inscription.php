@@ -27,6 +27,7 @@ try {
         $userModel->password = md5($_POST["password"]);
         $userModel->datecreated = date("Y-m-d");
         $userModel->role = $_GET['role'];
+        $id = $userModel->create($userModel);
 
         // verifie le rôle du visiteur grâce aux bouton cliqué
         if (strval($_GET['role']) === "instructeur") {
@@ -92,7 +93,6 @@ try {
             $dataModel->userid = $id["id"];
         }
 
-        $id = $userModel->create($userModel);
         $dataModel->create($dataModel);
         header("Location: ../controller/login.php");
     }

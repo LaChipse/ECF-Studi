@@ -60,7 +60,13 @@
                     </table> 
                 </div>
         <?php 
-        }
+        } else { ?>
+
+        <div class="row">
+        <h3 class="mt-5 pt-5 text-center">Aucune nouvelle candidature<h2>
+        </div>
+
+        <?php  }
         ?>
         </div>
         
