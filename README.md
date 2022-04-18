@@ -4,8 +4,6 @@
 
 ## Installer XAMPP' :'
 
-***
-
 * telecharger l'[installeur XAMPP](https://www.apachefriends.org/fr/index.html)
 * desactiver votre antivirus le temps de l'installation
 * lors du choix des outils, Apache, MySQL et PHP doivent être cochés
@@ -13,8 +11,6 @@
 ***
 
 ## Installer postgresql
-
-***
 
 * telecharger [PostgreSQL](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
 * lors du choix du répertoire d'installation, choisissez C:\xampp\pgsql\(version de postgresql). Le dossier pgsql devra etre créer.
@@ -26,8 +22,6 @@
 ***
 
 ## Configuration base de données' :'
-
-***
 
 * connecté vous grâce à votre mot de passe.
 * onglet object -> register -> server
@@ -45,8 +39,6 @@
 ***
 
 ## Configurer xamp pour postgresql
-
-***
 
 * ouvrer le fichier php.ini  localisé dans C:\xampp\php.
 * enlever les ; devant les lignes extension=pgsql et extension=pdo_pgsql
