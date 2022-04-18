@@ -1,0 +1,3 @@
+git : https://github.com/LaChipse/ECF-Studi.git
+
+trello : https://trello.com/invite/b/Ams3DMJi/ffcd58c6684d9feee104967c80a8077a/ecoit

@@ -42,11 +42,11 @@
             <div class="text-end"">
             <?php if (!isset($_SESSION['user']) || $_SESSION['user'] == FALSE) { ?>
                 <a href="../controller/login.php" class= text-decoration-none">
-                    <button type="button" class="btn  me-2">Login</button>
+                    <button type="button" class="btn  me-2">Connexion</button>
                 </a>
             <?php } else { ?>
                 <a href="../controller/logout.php" class= text-decoration-none">
-                    <button type="button" class="btn me-2">Log-Out</button>
+                    <button type="button" class="btn me-2">Déconnexion</button>
                 </a>
             <?php } ?>
             </div>

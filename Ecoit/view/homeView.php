@@ -100,15 +100,15 @@
             $pagination_urls = '';
 
             if ($page != 1) {
-                $pagination_urls .= "&nbsp;&nbsp;<a href='../controller/home.php?page=". ($page - 1) . "'>Previous</a>";
+                $pagination_urls .= "&nbsp;&nbsp;<a href='../controller/home.php?page=". ($page - 1) . "'>Précédent</a>";
             } else {
-                $pagination_urls .= "&nbsp;&nbsp;<a>Previous</a>";
+                $pagination_urls .= "&nbsp;&nbsp;<a>Précédent</a>";
             }
 
             if ($page != $total_pages) {
-                $pagination_urls .= "&nbsp;&nbsp;<a href='../controller/home.php?page=". ($page + 1) . "'>Next</a>";
+                $pagination_urls .= "&nbsp;&nbsp;<a href='../controller/home.php?page=". ($page + 1) . "'>Suivant</a>";
             } else {
-                $pagination_urls .= "&nbsp;&nbsp;<a>Next</a>";
+                $pagination_urls .= "&nbsp;&nbsp;<a>Suivant</a>";
             }
 
             echo "<div class='row row-cols-1 row-cols-md-3 g-4 mt-5'>"
